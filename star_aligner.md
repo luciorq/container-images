@@ -32,7 +32,7 @@ docker build -t luciorq/star dockerfiles/star
 # Running container
 
 ```
-docker run --rm luciorq/star -h
+docker run --rm -u $UID luciorq/star -h
 ```
 
 

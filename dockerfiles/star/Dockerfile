@@ -29,5 +29,12 @@ RUN cd STAR/source \
   && make STAR \
   && rm /${STAR_VERSION}.tar.gz
 
+# Set working directory
+ENV HOME=/data
+WORKDIR /data
+
 # Executable
 ENTRYPOINT ["/STAR/source/STAR"]
+
+# Default parameter
+CMD ["--help"]
