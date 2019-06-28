@@ -8,9 +8,10 @@ sudo apt-get install \
   make
 
 # Get latest STAR source from releases
-wget https://github.com/alexdobin/STAR/archive/2.7.0b.tar.gz
-tar -xzf 2.7.0b.tar.gz
-cd STAR-2.7.0b
+STAR_VERSION=2.7.1a
+wget https://github.com/alexdobin/STAR/archive/${STAR_VERSION}.tar.gz
+tar -xzf ${STAR_VERSION}.tar.gz
+cd STAR-${STAR_VERSION}
 
 # Alternatively, get STAR source using git
 git clone https://github.com/alexdobin/STAR.git

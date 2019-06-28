@@ -3,7 +3,8 @@
 mkdir dockerfiles/sra-tools
 touch dockerfiles/sra-tools/Dockerfile
 ```
-https://github.com/ncbi/sra-tools/archive/2.9.4.tar.gz
+http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.9.6-1/sratoolkit.2.9.6-1-ubuntu64.tar.gz
+https://github.com/ncbi/sra-tools/archive/2.9.6.tar.gz
 
 # Building image
 

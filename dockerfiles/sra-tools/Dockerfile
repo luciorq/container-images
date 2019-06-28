@@ -2,8 +2,9 @@
 FROM ubuntu:18.04
 
 # Variables
+ARG BUILD_VERSION
+ENV SRA_VERSION=$BUILD_VERSION
 ENV DEBIAN_FRONTEND noninteractive
-ENV SRA_VERSION 2.9.4
 
 # Installation
 RUN set -e \
@@ -21,7 +22,7 @@ RUN set -e \
 RUN wget --no-check-certificate --output-document sratoolkit.tar.gz http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
   && tar -xzf sratoolkit.tar.gz \
   && rm sratoolkit.tar.gz \
-  && mv sratoolkit.${SRA_VERSION}-ubuntu64 sratoolkit
+  && mv sratoolkit.*-ubuntu64 sratoolkit
 
 
 # Set working directory
