@@ -37,15 +37,3 @@ RUN cd edirect \
 
 ENV PATH="/edirect:${PATH}"
 
-# RUN echo $PATH
-
-# Set working directory
-# ENV HOME=/data
-# WORKDIR $HOME
-
-# Executable
-# ENTRYPOINT ["/STAR/source/STAR"]
-
-# Default parameter
-# CMD ["--help"]
-

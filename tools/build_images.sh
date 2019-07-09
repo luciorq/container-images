@@ -39,9 +39,9 @@ build_docker_images luciorq/entrez-direct 11.6
 # docker run --rm -u $UID luciorq/trimmomatic -version
 build_docker_images luciorq/trimmomatic latest
 
-# For Trimmomatic
-# docker run --rm -u $UID luciorq/trimmomatic -h
-#build_docker_images luciorq/bowtie2 XXXXX-x
+# For Bowtie2
+# docker run --rm -u $UID luciorq/bowtie2 -h
+build_docker_images luciorq/bowtie2  2.3.5.1
 
 
 
