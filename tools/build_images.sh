@@ -25,7 +25,7 @@ build_docker_images luciorq/sra-tools 2.9.6
 
 # For STAR aligner
 # docker run --rm -u $UID luciorq/star -h
-build_docker_images luciorq/star 2.7.1a
+build_docker_images luciorq/star 2.7.3a
 
 # For SAMtools
 # docker run --rm -u $UID luciorq/samtools samtools view --help
