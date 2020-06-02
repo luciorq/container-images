@@ -23,19 +23,21 @@ RUN set -e \
 
 RUN wget --no-check-certificate https://github.com/alexdobin/STAR/archive/${STAR_VERSION}.tar.gz \
   && tar -xzf ${STAR_VERSION}.tar.gz \
-  && mv STAR-${STAR_VERSION} STAR
+  && mv STAR-${STAR_VERSION} /usr/local/STAR
 
 
-RUN cd STAR/source \
+RUN cd /usr/local/STAR/source \
   && make STAR \
-  && rm /${STAR_VERSION}.tar.gz
+  && rm /${STAR_VERSION}.tar.gz \
+  && ln -s /usr/local/STAR/bin/Linux_x86_64/STAR /usr/local/bin/STAR
+
 
 # Set working directory
 # ENV HOME=/data
 # WORKDIR $HOME
 
 # Executable
-ENTRYPOINT ["/STAR/source/STAR"]
+ENTRYPOINT ["/usr/local/bin/STAR"]
 
 # Default parameter
 CMD ["--help"]
