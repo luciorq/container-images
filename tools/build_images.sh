@@ -45,8 +45,9 @@ build_docker_images luciorq/trimmomatic latest
 
 # For Bowtie2
 # docker run --rm -u $UID luciorq/bowtie2 -h
-build_docker_images luciorq/bowtie2  2.3.5.1
+build_docker_images luciorq/bowtie2 2.3.5.1
 
 
-
-
+# For rMATS with turbo
+# docker run --rm -u $UID luciorq/rmats --help
+build_docker_images luciorq/rmats 4.1.0

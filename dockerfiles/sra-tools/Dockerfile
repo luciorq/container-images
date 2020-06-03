@@ -30,6 +30,8 @@ ENV PATH=$PATH:/sratoolkit/bin
 ENV HOME=/data
 WORKDIR /data
 
+RUN echo "export PATH=$PATH" > /etc/environment
+
 # Executable
 # ENTRYPOINT ["/usr/local/sra-tools"]
 
