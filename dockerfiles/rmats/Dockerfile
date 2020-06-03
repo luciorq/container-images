@@ -1,46 +1,54 @@
-##### BASE IMAGE #####
-FROM python:2.7-slim
+# BASE IMAGE
+FROM ubuntu:20.04
 
-##### METADATA #####
-LABEL base.image="python:2.7-slim"
-LABEL version="5"
-LABEL software="rmats"
-LABEL software.version="4.0.2"
-LABEL software.description="MATS is a computational tool to detect differential alternative splicing events from RNA-Seq data."
-LABEL software.website="http://rnaseq-mats.sourceforge.net/"
-LABEL software.documentation="http://rnaseq-mats.sourceforge.net/user_guide.htm"
-LABEL software.license=""
-LABEL software.tags="Genomics,Transcriptomics"
-LABEL maintainer="foivos.gypas@unibas.ch"
-LABEL maintainer.organisation="Biozentrum, University of Basel"
-LABEL maintainer.location="Klingelbergstrasse 50/70, CH-4056 Basel, Switzerland"
-LABEL maintainer.lab="Zavolan Lab"
-LABEL maintainer.license="https://spdx.org/licenses/Apache-2.0"
+# set default shell
+SHELL [ "/bin/bash", "--login", "-c" ]
 
-##### VARIABLES #####
-# Use variables for convenient updates/re-usability
-ENV SOFTWARE_VERSION 4.0.2
+# Variables
+ARG BUILD_VERSION
+ENV RMATS_VERSION=$BUILD_VERSION
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update -y \
-  && apt-get install -y \
+
+# Installation
+RUN set -e \
+  && apt-get -y update \
+  && apt-get -y install --no-install-recommends \
+  --no-install-suggests \
     wget \
     libblas-dev \
     liblapack-dev \
     libgsl2 \
     libgsl-dev \
+    zlib1g-dev \
     gfortran \
     gcc \
     make \
-  && pip2 install \
-    numpy \
-  && wget https://sourceforge.net/projects/rnaseq-mats/files/MATS/rMATS.${SOFTWARE_VERSION}.tgz/download \
-  && tar -xzf download \
-  && chmod +x /rMATS.${SOFTWARE_VERSION}/rMATS-turbo-Linux-UCS4/rmats.py \
-  && chmod +x /rMATS.${SOFTWARE_VERSION}/rMATS-turbo-Linux-UCS2/rmats.py \
-  && rm download \
-  && cd /usr/lib/x86_64-linux-gnu \
-  && ln -s libgsl.so libgsl.so.0 \
-  && cd $HOME \
-  && apt-get autoremove -y \
+    cmake \
+    python \
+    python3-pip \
+  && apt-get -y autoremove \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && rm -rf /var/lib/apt/lists/
+
+# install pip
+RUN pip install --upgrade pip
+
+# # install miniconda
+# ENV MINICONDA_VERSION 4.8.2
+# ENV CONDA_DIR $HOME/miniconda3
+# RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh -O ~/miniconda.sh && \
+#     chmod +x ~/miniconda.sh && \
+#     ~/miniconda.sh -b -p $CONDA_DIR && \
+#     rm ~/miniconda.sh
+# RUN wget --no-check-certificate \
+#   --output-document sratoolkit.tar.gz \
+#   http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
+#   && tar -xzf sratoolkit.tar.gz \
+#   && rm sratoolkit.tar.gz \
+#   && mv sratoolkit.*-ubuntu64 sratoolkit
+# 
+#cd /usr/local
+# https://github.com/Xinglab/rmats-turbo/releases/download/v4.1.0/rmats_turbo_v4_1_0.tar.gz
+#https://github.com/Xinglab/rmats-turbo/releases/download/v4.1.0/rmats_turbo_v${RMATS_VERSION}.tar.gz
+#git clone https://github.com/Xinglab/rmats-turbo.git
