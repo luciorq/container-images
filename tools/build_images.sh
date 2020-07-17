@@ -1,6 +1,8 @@
- # sudo singularity build \
- #  ${SINGULARITY_REPO}/star_${STAR_VERSION}.sif \
- #  docker://luciorq/star:latest
+SINGULARITY_REPO=/data/singularity_images
+mkdir -p $SINGULARITY_REPO
+#sudo singularity build \
+#  ${SINGULARITY_REPO}/$(basename $IMAGE_NAME)_${IMAGE_VERSION}.sif \
+#  docker://luciorq/$(basename $IMAGE_NAME):${IMAGE_VERSION}
 
 # Funcion definition
 build_docker_images() {
@@ -15,6 +17,9 @@ build_docker_images() {
     -t ${IMAGE_NAME}:${IMAGE_VERSION} dockerfiles/$(basename $IMAGE_NAME)
   docker tag ${IMAGE_NAME}:${IMAGE_VERSION} ${IMAGE_NAME}:latest
   docker push ${IMAGE_NAME}
+  sudo singularity build \
+    ${SINGULARITY_REPO}/$(basename $IMAGE_NAME)_${IMAGE_VERSION}.sif \
+    docker://luciorq/$(basename $IMAGE_NAME):${IMAGE_VERSION}
 }
 
 cd ~/projects/docker_images
@@ -33,7 +38,8 @@ build_docker_images luciorq/star 2.7.3a
 
 # For SAMtools
 # docker run --rm -u $UID luciorq/samtools samtools view --help
-build_docker_images luciorq/samtools 1.9
+# docker run --rm -u $UID luciorq/samtools bcftools --help
+build_docker_images luciorq/samtools 1.10
 
 # For Entrez-Direct
 # docker run --rm -u $UID luciorq/entrez-direct /bin/bash -c "esearch -db gene -query "VAMP" | efetch -format xml"
@@ -47,7 +53,21 @@ build_docker_images luciorq/trimmomatic latest
 # docker run --rm -u $UID luciorq/bowtie2 -h
 build_docker_images luciorq/bowtie2 2.3.5.1
 
-
 # For rMATS with turbo
-# docker run --rm -u $UID luciorq/rmats --help
+# docker run --rm -u $UID --entrypoint run_rmats luciorq/rmats:4.1.0 --version
+# docker run --rm -u $UID luciorq/rmats run_rmats -h
 build_docker_images luciorq/rmats 4.1.0
+
+# For deeptools
+# docker run --rm -u $UID luciorq/deeptools bamCoverage -h
+# docker run --rm -u $UID luciorq/deeptools bamCoverage --version
+build_docker_images luciorq/deeptools 3.4.3
+
+# For minimap2
+# docker run --rm -u $UID luciorq/minimap2 minimap2 -h
+# docker run --rm -u $UID luciorq/minimap2 --version
+build_docker_images luciorq/minimap2 2.17
+
+# For MendelMD
+build_docker_images luciorq/mendelmd latest
+
