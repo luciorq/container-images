@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+dockerfiles/mendelmd/*.tar
+dockerfiles/mendelmd/pynnotat*
