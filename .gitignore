@@ -4,3 +4,4 @@
 .Ruserdata
 dockerfiles/mendelmd/*.tar
 dockerfiles/mendelmd/pynnotat*
+dockerfiles/mendelmd/morbid*
