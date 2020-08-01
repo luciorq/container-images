@@ -1,6 +1,7 @@
 # BASE IMAGE
 FROM ubuntu:20.04
 
+#muito legal!
 # Variables
 ARG BUILD_VERSION
 ENV ENTREZ_VERSION=$BUILD_VERSION
