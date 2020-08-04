@@ -18,7 +18,6 @@ RUN set -e \
     wget \
     libblas-dev \
     liblapack-dev \
-    libgsl2 \
     libgsl-dev \
     zlib1g-dev \
     gfortran \
