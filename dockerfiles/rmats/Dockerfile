@@ -9,45 +9,77 @@ ARG BUILD_VERSION
 ENV RMATS_VERSION=$BUILD_VERSION
 ENV DEBIAN_FRONTEND noninteractive
 
-
 # Installation
 RUN set -e \
   && apt-get -y update \
   && apt-get -y install --no-install-recommends \
   --no-install-suggests \
     wget \
+    git \
     libblas-dev \
     liblapack-dev \
     libgsl-dev \
     zlib1g-dev \
+    libgslcblas0 \
     gfortran \
     gcc \
+    g++ \
     make \
     cmake \
     python \
+    python-dev \
     python3-pip \
+    python3-dev \
+    r-base \
+    r-base-dev \
+    libncurses5-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    zlib1g-dev \
+    build-essential \
+    bedtools \
+    libblas-dev \
+    liblapack-dev \
+    gfortran \
   && apt-get -y autoremove \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/
 
 # install pip
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
+RUN wget --no-check-certificate \
+  https://bootstrap.pypa.io/get-pip.py \
+  && python2 get-pip.py
 
-# # install miniconda
-# ENV MINICONDA_VERSION 4.8.2
-# ENV CONDA_DIR $HOME/miniconda3
-# RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh -O ~/miniconda.sh && \
-#     chmod +x ~/miniconda.sh && \
-#     ~/miniconda.sh -b -p $CONDA_DIR && \
-#     rm ~/miniconda.sh
-# RUN wget --no-check-certificate \
-#   --output-document sratoolkit.tar.gz \
-#   http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
-#   && tar -xzf sratoolkit.tar.gz \
-#   && rm sratoolkit.tar.gz \
-#   && mv sratoolkit.*-ubuntu64 sratoolkit
-# 
-#cd /usr/local
-# https://github.com/Xinglab/rmats-turbo/releases/download/v4.1.0/rmats_turbo_v4_1_0.tar.gz
-#https://github.com/Xinglab/rmats-turbo/releases/download/v4.1.0/rmats_turbo_v${RMATS_VERSION}.tar.gz
-#git clone https://github.com/Xinglab/rmats-turbo.git
+RUN pip3 install numpy
+RUN pip3 install scipy
+RUN pip3 install pysam
+RUN pip3 install Cython
+
+RUN pip install --upgrade pip
+RUN pip install numpy
+RUN pip install scipy
+RUN pip install pysam
+RUN pip install Cython
+
+
+RUN wget --no-check-certificate \
+   --output-document rmats-turbo.tar.gz \
+   https://github.com/Xinglab/rmats-turbo/releases/download/v4.1.0/rmats_turbo_v4_1_0.tar.gz \
+  && tar -xzf rmats-turbo.tar.gz \
+  && rm rmats-turbo.tar.gz \
+  && mv rmats-turbo /usr/local/rmats-turbo
+
+
+RUN cd /usr/local/rmats-turbo \
+  && ./build_rmats
+
+RUN touch ${HOME}/.bashrc
+
+ENV PATH="/usr/local/rmats-turbo:${PATH}"
+
+RUN echo "export PATH=$PATH" >> /etc/environment
+
+ENTRYPOINT ["python", "/usr/local/rmats-turbo/rmats.py"]

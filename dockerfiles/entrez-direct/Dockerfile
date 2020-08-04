@@ -37,4 +37,4 @@ RUN cd edirect \
 
 ENV PATH="/edirect:${PATH}"
 
-RUN echo "export PATH=$PATH" > /etc/environment
+RUN echo "export PATH=$PATH" >> /etc/environment

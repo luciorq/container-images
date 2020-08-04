@@ -19,7 +19,9 @@ RUN set -e \
   && rm -rf /var/lib/apt/lists/
 
 
-RUN wget --no-check-certificate --output-document sratoolkit.tar.gz http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
+RUN wget --no-check-certificate -\
+  -output-document sratoolkit.tar.gz \
+  http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
   && tar -xzf sratoolkit.tar.gz \
   && rm sratoolkit.tar.gz \
   && mv sratoolkit.*-ubuntu64 sratoolkit
