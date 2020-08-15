@@ -29,7 +29,7 @@ docker login --username luciorq
 # For SRA tools
 # docker run --rm -u $UID luciorq/sra-tools fasterq-dump --help
 
-#build_docker_images luciorq/sra-tools 2.9.6
+#build_docker_images luciorq/sra-tools 2.10.7
 build_docker_images luciorq/sra-tools latest
 
 # For STAR aligner
