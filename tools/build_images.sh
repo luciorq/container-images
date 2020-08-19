@@ -22,7 +22,19 @@ build_docker_images() {
     docker://luciorq/$(basename $IMAGE_NAME):${IMAGE_VERSION}
 }
 
-cd ~/projects/docker_images
+build_test() {
+  echo "First argument is as $1"
+  echo "Second argument is as $2"
+
+  IMAGE_NAME="$1"
+  IMAGE_VERSION="$2"
+
+  echo "### Building image $IMAGE_NAME v. $IMAGE_VERSION ###"
+  DOCKER_BUILDKIT=1 docker build --build-arg BUILD_VERSION=${IMAGE_VERSION} \
+    -t ${IMAGE_NAME}:${IMAGE_VERSION} dockerfiles/$(basename $IMAGE_NAME)
+}
+
+# cd ~/projects/docker_images
 
 docker login --username luciorq
 
@@ -43,7 +55,7 @@ build_docker_images luciorq/samtools 1.10
 
 # For Entrez-Direct
 # docker run --rm -u $UID luciorq/entrez-direct /bin/bash -c "esearch -db gene -query "VAMP" | efetch -format xml"
-build_docker_images luciorq/entrez-direct 13.7
+build_docker_images luciorq/entrez-direct 13.8
 
 # For Trimmomatic
 # docker run --rm -u $UID luciorq/trimmomatic -version
@@ -67,7 +79,4 @@ build_docker_images luciorq/deeptools 3.4.3
 # docker run --rm -u $UID luciorq/minimap2 minimap2 -h
 # docker run --rm -u $UID luciorq/minimap2 --version
 build_docker_images luciorq/minimap2 2.17
-
-# For MendelMD
-build_docker_images luciorq/mendelmd latest
 

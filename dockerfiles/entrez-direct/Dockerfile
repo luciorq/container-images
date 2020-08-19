@@ -22,6 +22,7 @@ RUN set -e \
   libxml-simple-perl \
   libwww-perl \
   libnet-perl \
+  locales \
   && apt-get -y autoremove \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/
@@ -34,6 +35,12 @@ RUN wget --no-check-certificate ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/e
 
 RUN cd edirect \
   && ./setup.sh
+
+# to remove perl warnings
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 ENV PATH="/edirect:${PATH}"
 
