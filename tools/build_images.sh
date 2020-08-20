@@ -80,3 +80,8 @@ build_docker_images luciorq/deeptools 3.4.3
 # docker run --rm -u $UID luciorq/minimap2 --version
 build_docker_images luciorq/minimap2 2.17
 
+# For fastqc
+# docker run --rm -u $UID luciorq/fastqc --version
+# singularity exec /data/singularity_images/fastqc_0.11.9.sif fastqc -v
+# build_test luciorq/fastqc 0.11.9
+build_docker_images luciorq/fastqc 0.11.9
