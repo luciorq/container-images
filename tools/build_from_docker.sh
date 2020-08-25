@@ -26,5 +26,8 @@ build_from_docker() {
     docker://${IMAGE_NAME}
 }
 
-#
+# salmon
 build_from_docker combinelab/salmon "salmon --version"
+
+# deepvariant
+build_from_docker google/deepvariant "echo 0.10.0"
