@@ -1,5 +1,5 @@
 SINGULARITY_REPO=/data/singularity_images
-mkdir -p $SINGULARITY_REPO
+mkdir -p ${SINGULARITY_REPO}
 #sudo singularity build \
 #  ${SINGULARITY_REPO}/$(basename $IMAGE_NAME)_${IMAGE_VERSION}.sif \
 #  docker://luciorq/$(basename $IMAGE_NAME):${IMAGE_VERSION}
