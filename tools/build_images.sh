@@ -85,3 +85,6 @@ build_images luciorq/minimap2 2.17
 # singularity exec /data/singularity_images/fastqc_0.11.9.sif fastqc -v
 # build_test luciorq/fastqc 0.11.9
 build_images luciorq/fastqc 0.11.9
+
+# IPMItools on ubuntu
+build_images luciorq/ipmitool latest
