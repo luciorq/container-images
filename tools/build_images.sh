@@ -4,6 +4,14 @@ mkdir -p ${SINGULARITY_REPO}
 #  ${SINGULARITY_REPO}/$(basename $IMAGE_NAME)_${IMAGE_VERSION}.sif \
 #  docker://luciorq/$(basename $IMAGE_NAME):${IMAGE_VERSION}
 
+
+## Example for salmon
+#sudo singularity build \
+#  ${SINGULARITY_REPO}/salmon_v1.5.0.sif \
+#  docker://combinelab/salmon:latest
+
+
+
 # Funcion definition
 build_images() {
   echo "First argument is as $1"
