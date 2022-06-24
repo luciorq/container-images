@@ -1,31 +1,30 @@
+# Declared arguments
+ARG app_version=current
+ARG os_version=22.04
 # BASE IMAGE
-FROM ubuntu:20.04
+FROM ubuntu:"${os_version}"
 
 # Variables
-ARG BUILD_VERSION
-ENV SRA_VERSION=$BUILD_VERSION
+ENV APP_VERSION="${app_version}"
 ENV DEBIAN_FRONTEND noninteractive
 
 # Installation
 RUN set -e \
-  && apt-get -y update \
-  && apt-get -y install \
+  && apt -y update \
+  && apt -y install \
     --no-install-recommends \
     --no-install-suggests \
-    # wget \
-    # libmagic-dev \
-    libxml2 \
+    wget \
     libxml-libxml-perl \
-  && apt-get -y autoremove \
-  && apt-get clean \
+  && apt -y autoremove \
+  && apt clean \
   && rm -rf /var/lib/apt/lists/
-
 
 RUN mkdir -p /opt/apps \
   && wget --no-check-certificate \
     -L -nv -q \
     --output-document /opt/apps/sratoolkit.tar.gz \
-    https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz \
+    https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/${APP_VERSION}/sratoolkit.${APP_VERSION}-ubuntu64.tar.gz \
   && tar -C /opt/apps/ \
     -xzf /opt/apps/sratoolkit.tar.gz \
   && rm /opt/apps/sratoolkit.tar.gz \
@@ -38,6 +37,7 @@ RUN for _i in $(ls -A1 /opt/apps/sratoolkit/bin); do ln -sf /opt/apps/sratoolkit
 # WORKDIR /data
 
 # RUN echo "export PATH=$PATH" > /etc/environment
+RUN vdb-config --interactive --interactive-mode textual
 
 # Executable
 # ENTRYPOINT ["/usr/local/sra-tools"]
